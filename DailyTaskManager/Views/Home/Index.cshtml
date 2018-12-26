@@ -1,0 +1,174 @@
+﻿@model DailyTaskManager.Models.TaskDetails
+@section scripts
+    {
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+
+
+        $(function () {
+            $.each($('input[id="checkboxName"]:checked'), function () {
+                DisableCheckboxTaskList(this)
+            });
+
+        });
+        function Oncheckboxcheked(chkbox) {
+            if (chkbox.checked) {
+
+                DisableCheckboxTaskList(chkbox)
+                $.ajax({
+                    url: "/Home/UpdateOrDelete",
+                    type: 'POST',
+                    cache: false,
+                    data: {
+                        ID: chkbox.value + ',',
+                        ischecked: true,
+                        command: "update"
+                    },
+
+                    success: function (result) {
+                        alert(result);
+                    }
+
+                });
+
+            }
+
+        }
+
+        function RemoveTaskFromList() {
+            var r = confirm("if task is completed , you can delete the record.Are you Sure ?");
+            var chkid = "";
+            if (r) {
+
+                $.each($('input[id="checkboxName"]:checked'), function () {
+                    chkid += this.value + ','
+                });
+                $.ajax({
+                    url: "/Home/UpdateOrDelete",
+                    type: 'POST',
+                    cache: false,
+                    data: {
+                        ID: chkid,
+                        ischecked: true,
+                        command: "delete"
+                    },
+
+                    success: function (response) {
+                        alert("reccord deleted successfully")
+                        location.href = response;
+                        // $("#ultasklist").html(response)
+                        //       $('input[id="checkboxName"]').html(response)
+
+
+
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+            }
+            else {
+                alert("pressed cancel");
+            }
+        }
+
+
+
+        function DisableCheckboxTaskList(chkbox) {
+
+            $(chkbox)[0].setAttribute("disabled", true);
+            $(chkbox)[0].parentNode.setAttribute("style", "text-decoration:line-through;color:red");
+            var btnRemove = document.getElementById("btnRemove")
+            btnRemove.style.display = "block";
+        }
+
+
+    </script>
+
+}
+
+@{
+    ViewBag.Title = "DailyTask Manager";
+}
+
+<h2></h2>
+
+<div class="col-centered ">
+    <div class="left">
+
+        <table>
+            @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+            {
+                <tr>
+                    <td>
+                        @Html.Label("lblDate", "Date:")
+                    </td>
+                    <td>
+                        @Html.TextBox("Tdate", DateTime.Now.ToShortDateString(), new { @readonly = "readonly", style = " width:75px;border:none;background:none;" })
+                        @*, new { @disabled = "disabled", style = " width:70px;border:none;background: #00FFFF" })*@
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.TextBox("TaskName", "task to do", new { @class = "form-control" })
+                    </td>
+                    <td><input type="submit" id="submit" name="submit" value="Click to Add" /></td>
+                </tr>
+            }
+            <tr><td><hr /></td></tr>
+            @*<tr>
+                    @if (Model != null)
+                    {
+                        <td>
+                            @Html.ListBoxFor(Model => Model.TaskId, Model.TaskNames, new { style = "width:350px;height:150px;border:solid;" })
+                        </td>
+                    }
+
+                </tr>*@
+
+
+            <tr>
+                <td>
+
+                    @Html.Label("lblToDoList", "To Do List", new { style = "font:bold;" })
+                    <ul id="ultasklist" style="margin:0;padding:0;font-weight:bold;">
+
+                        @if (@Model.TaskNames != null)
+            {
+                foreach (var item in @Model.TaskNames)
+                {
+
+                                <li style="list-style-type:none;">
+                                    <div class="checkbox">
+
+                                        <label>
+                                            <input type="checkbox"
+                                                   id="checkboxName"
+                                                   name="chkTaskNames"
+                                                   value="@item.Value" onclick="Oncheckboxcheked(this)" checked="@item.Selected" />
+
+                                            @item.Text
+                                        </label>
+
+                                    </div>
+                                </li>
+
+                            }
+                        }
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="button" id="btnRemove" value="remove from Task list" hidden="hidden" onclick="RemoveTaskFromList()" />
+                </td>
+            </tr>
+        </table>
+
+    </div>
+    <div class="right">
+
+        <p>Notification and reminder</p>
+    </div>
+
+</div>

@@ -1,0 +1,58 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    height: 625px;
+    /*background: -webkit-linear-gradient(top,aquamarine 50%, aqua 100%);*/
+    background-image: linear-gradient(to bottom, aquamarine, beige);
+    background-color: aquamarine;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+}
+
+
+.col-centered {
+    margin: 0 auto;
+    width: 60%;
+    border: 3px solid beige;
+    background-color: aquamarine;
+    height: 515px;
+    padding: 10px;
+    /*display: flex;
+    display: -mx-flexbox; 
+    display: -webkit-flex; 
+    flex-grow: 0;*/
+}
+
+
+.left {
+    float: left;
+    width: 50%;
+    height: 515px;
+}
+
+.right {
+    float: right;
+    width: 50%;
+    height: 515px;
+}
+
+.navbar-background {
+    background-color: mediumaquamarine;
+    width: 100%;
+    color: black;
+    font: bold Segoe Script;
+    text-align: center;
+}
+/* Set width on the form input elements since they're 100% wide by default */
+input, select, textarea {
+    max-width: 280px;
+}
