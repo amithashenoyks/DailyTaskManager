@@ -34,15 +34,16 @@ footer {
 
 
 .left {
+   
     float: left;
     width: 50%;
-    height: 515px;
+    height: 500px;
 }
 
 .right {
     float: right;
     width: 50%;
-    height: 515px;
+    /*height: 515px;*/
 }
 
 .navbar-background {

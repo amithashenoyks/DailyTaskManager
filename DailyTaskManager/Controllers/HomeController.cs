@@ -33,7 +33,7 @@ namespace DailyTaskManager.Controllers
 
                 t.TaskNames = listSelectListItem;
             }
-           
+
             return View(t);
         }
 
@@ -53,12 +53,17 @@ namespace DailyTaskManager.Controllers
         }
 
 
+        public ActionResult Reminder()
+        {
+            return PartialView("Reminder");
+        }
+
         [HttpPost]
         public ActionResult UpdateOrDelete(string ID, bool ischecked, string command)
         {
             TaskDetails tmodel = new TaskDetails();
 
-            if(UpdateOrDeleteTaskList(ID, ischecked, command))
+            if (UpdateOrDeleteTaskList(ID, ischecked, command))
             {
 
                 if (command == "delete")
@@ -70,6 +75,11 @@ namespace DailyTaskManager.Controllers
 
             return View();
         }
+
+
+
+
+
 
         //Add TaskName to Table
         public bool AddToTaskList(TaskDetails t)

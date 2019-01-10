@@ -6,22 +6,28 @@
     <title>@ViewBag.Title</title>
 
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     @if (IsSectionDefined("scripts"))
     {
-        @RenderSection("scripts");
+        @RenderSection("scripts", required: false);
     }
 </head>
 <body>
     @*<div class="navbar navbar-inverse navbar-fixed-top navbar-background">
-        <div class="container navbar-background">
-            <div class="navbar-header navbar-background">
+            <div class="container navbar-background">
+                <div class="navbar-header navbar-background">
 
-                @Html.ActionLink("DailyTask Manager", "Index", "Home", new { area = "" }, new { @class = "navbar-brand navbar-background" })
+                    @Html.ActionLink("DailyTask Manager", "Index", "Home", new { area = "" }, new { @class = "navbar-brand navbar-background" })
+                </div>
             </div>
-        </div>
-    </div>*@
+        </div>*@
     <div class="navbar navbar-fixed-top navbar-background">
         @Html.Label("lblAppName", "Daily Planner", new { @class = "navbar-brand navbar-background" })
     </div>
@@ -34,9 +40,6 @@
         </footer>
     </div>
 
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css"
           rel="stylesheet" type="text/css" />
     <link href="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
@@ -47,6 +50,9 @@
             $('.listbox').multiselect({
                 includeSelectAllOption: true
             });
+
+
+
         });
     </script>
 

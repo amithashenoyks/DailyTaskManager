@@ -1,14 +1,39 @@
 ﻿@model DailyTaskManager.Models.TaskDetails
 @section scripts
     {
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
     <script type="text/javascript">
 
 
         $(function () {
+          
+            
             $.each($('input[id="checkboxName"]:checked'), function () {
                 DisableCheckboxTaskList(this)
             });
+
+
+
+            $('#btnnotification').click(function () {
+
+
+                var url = $('#modalpopup').data('url');
+
+                $.get(url, function (data) {
+                    $('#modalpopup').html(data);
+
+                    $('#modalpopup').modal('show');
+                    //appending modal background inside the blue div
+                    $('.modal-backdrop').appendTo('.right');
+                });
+                //remove the padding right and modal-open class from the body tag which bootstrap adds when a modal is shown
+                $('body').removeClass("modal-open")
+                $('body').css("padding-left", "");
+
+            });
+
 
         });
         function Oncheckboxcheked(chkbox) {
@@ -83,6 +108,8 @@
         }
 
 
+
+
     </script>
 
 }
@@ -94,26 +121,27 @@
 <h2></h2>
 
 <div class="col-centered ">
-    <div class="left" style="border-right:thick solid black;">
+
+    <div class="left" style="border-right:1px solid black;height:500px;" id="leftdiv ;">
 
         <table>
             @using (Html.BeginForm("Index", "Home", FormMethod.Post))
             {
-                <tr>
-                    <td>
-                        @Html.Label("lblDate", "Date:")
-                    </td>
-                    <td>
-                        @Html.TextBox("Tdate", DateTime.Now.ToShortDateString(), new { @readonly = "readonly", style = " width:75px;border:none;background:none;" })
-                        @*, new { @disabled = "disabled", style = " width:70px;border:none;background: #00FFFF" })*@
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.TextBox("TaskName", "task to do", new { @class = "form-control" })
-                    </td>
-                    <td><input type="submit" id="submit" name="submit" value="Click to Add" /></td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.Label("lblDate", "Date:")
+                </td>
+                <td>
+                    @Html.TextBox("Tdate", DateTime.Now.ToShortDateString(), new { @readonly = "readonly", style = " width:75px;border:none;background:none;" })
+                    @*, new { @disabled = "disabled", style = " width:70px;border:none;background: #00FFFF" })*@
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.TextBox("TaskName", "task to do", new { @class = "form-control" })
+                </td>
+                <td><input type="submit" id="submit" name="submit" value="Click to Add" /></td>
+            </tr>
             }
             <tr><td><hr /></td></tr>
             @*<tr>
@@ -138,20 +166,20 @@
                 foreach (var item in @Model.TaskNames)
                 {
 
-                                <li style="list-style-type:none;">
-                                    <div class="checkbox">
+                        <li style="list-style-type:none;">
+                            <div class="checkbox">
 
-                                        <label>
-                                            <input type="checkbox"
-                                                   id="checkboxName"
-                                                   name="chkTaskNames"
-                                                   value="@item.Value" onclick="Oncheckboxcheked(this)" checked="@item.Selected" />
+                                <label>
+                                    <input type="checkbox"
+                                           id="checkboxName"
+                                           name="chkTaskNames"
+                                           value="@item.Value" onclick="Oncheckboxcheked(this)" checked="@item.Selected" />
 
-                                            @item.Text
-                                        </label>
+                                    @item.Text
+                                </label>
 
-                                    </div>
-                                </li>
+                            </div>
+                        </li>
 
                             }
                         }
@@ -168,7 +196,20 @@
     </div>
     <div class="right">
 
+        @*@using (Html.BeginForm("Reminder", "Home", FormMethod.Post))
+            { }*@
 
+        <!-- Button trigger modal -->
+
+        <button type="button" class="btn btn-primary" id="btnnotification" style="margin-left:5px;">
+            Add notification
+        </button>
+        <!--Modal-->
+        <div class="modal fade" id="modalpopup" tabindex="-1" role="dialog" data-url='@Url.Action("Reminder", "Home")' style="padding-right:500px;padding-top:75px;">
+
+        </div>
+        <!--Modal-->
     </div>
 
 </div>
+
